@@ -1,0 +1,41 @@
+﻿@page
+@model SSD_Assignment.Pages.FeedbackList.FeedbackThankYouModel
+@{
+}
+<h1>Feedback Form</h1>
+<form method="post" class="feedback">
+    <div class="form-group">
+        <label asp-for="Feedback.Name" class="control-label"></label>
+        <input asp-for="Feedback.Name" class="form-control" />
+        <span asp-validation-for="Feedback.Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Feedback.Subject" class="control-label"></label>
+        <input asp-for="Feedback.Subject" class="form-control" />
+        <span asp-validation-for="Feedback.Subject" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Feedback.Text" class="control-label"></label>
+        <input asp-for="Feedback.Text" class="form-control" height="20" />
+        <span asp-validation-for="Feedback.Text" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Submit" class="btn btn-primary" />
+    </div>
+</form>
+<h2>Thank You For Your Feedback</h2>
+<h3>We Appreciate Your Time Taken For The Feedback</h3>
+<a asp-page="/Books/Index">Continue Browsing?</a>
+
+@if (User.IsInRole("Admin") || User.IsInRole("FeedbackAdmin"))
+    {
+        <a asp-page="FeedbackDetails">Feedback Details</a>
+    }
+
+<style>
+    .feedback {
+        border: 5px solid cyan;
+        border-radius: 50px;
+        padding: 20px;
+    }
+</style>

@@ -1,0 +1,65 @@
+﻿@page
+@model SSD_Assignment.Pages.PaymentPage.PaymentModel
+@{
+}
+<h1>Payment Page</h1>
+<form method="post">
+    <div class="form-group">
+        <label asp-for="Payment.Name" class="control-label"></label>
+        <input asp-for="Payment.Name" class="form-control" />
+        <span asp-validation-for="Payment.Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Payment.Email" class="control-label"></label>
+        <input asp-for="Payment.Email" type="email" class="form-control" />
+        <span asp-validation-for="Payment.Email" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Payment.CardNo" class="control-label"></label>
+        <input asp-for="Payment.CardNo" class="form-control" placeholder="xxxx-xxxx-xxxx-xxxx" />
+        <span asp-validation-for="Payment.CardNo" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Payment.CardExpiryDate" class="control-label"></label>
+        <input asp-for="Payment.CardExpiryDate" class="form-control" height="20" />
+        <span asp-validation-for="Payment.CardExpiryDate" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Payment.CardCSV" class="control-label"></label>
+        <input asp-for="Payment.CardCSV" class="form-control" maxlength="20" />
+        <span asp-validation-for="Payment.CardCSV" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Payment.Address" class="control-label"></label>
+        <input asp-for="Payment.Address" class="form-control" height="20" />
+        <span asp-validation-for="Payment.Address" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Payment.PostalCode" class="control-label"></label>
+        <input asp-for="Payment.PostalCode" type="text" class="form-control" size="10" />
+        <span asp-validation-for="Payment.PostalCode" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Payment.PhoneNumber" class="control-label"></label>
+        <input asp-for="Payment.PhoneNumber" class="form-control" size="5" />
+        <span asp-validation-for="Payment.PhoneNumber" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Submit" class="btn btn-primary" />
+    </div>
+</form>
+<script>
+    var today = new Date();
+    var year = today.getFullYear();
+    var month = today.getMonth() + 1;
+    var date = today.getDate();
+    if (date < 10) {
+        date = '0' + date
+    }
+    if (month < 10) {
+        month = '0' + month
+    }
+    today = year + '-' + month + '-' + date;
+    document.getElementById("Payment_CardExpiryDate").setAttribute("min", today);
+</script>
+

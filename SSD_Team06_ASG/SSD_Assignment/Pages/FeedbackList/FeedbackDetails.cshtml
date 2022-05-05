@@ -1,0 +1,49 @@
+﻿@page
+@model RazorPagesBook.Pages.FeedbackList.FeedbackDetailsModel
+@{
+    ViewData["Title"] = "Details";
+}
+<h1>Feedback Details</h1>
+@for (var item = 0; item < Model.FeedbackList.Count; item++)
+{
+    <div class="row">
+        <div class="col-sm-8">
+            <dl class="row">
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.FeedbackList[item].Name)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.FeedbackList[item].Name)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.FeedbackList[item].Subject)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.FeedbackList[item].Subject)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.FeedbackList[item].Text)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.FeedbackList[item].Text)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.FeedbackList[item].Date)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.FeedbackList[item].Date)
+                </dd>
+                <dd>
+                    <a asp-page="./FeedbackDelete" asp-route-id="@Model.FeedbackList[item].ID">Delete</a> 
+                </dd>
+
+            </dl>
+        </div>
+    </div>
+}
+<a asp-page="./Feedback">Back to Form</a>
+<style>
+    dl {
+        border-bottom: 7px solid cyan;
+    }
+</style>

@@ -1,0 +1,500 @@
+﻿@page
+@model SSD_Assignment.Pages.Books.IndexModel
+@{
+    ViewData["Title"] = "Index";
+}
+<h1>New Arrivals</h1>
+
+@* Checks to see if user is authenticated and belongs to the role either 'Admin' or 'BookAdmin'
+   Then Show it the option to Create if the user is. 
+*@
+
+ @if (User.IsInRole("Admin") || User.IsInRole("BookAdmin"))
+  {
+    <p>
+        <a asp-page="Create">Create New</a>
+    </p>
+  }
+
+
+<form>
+    <p>
+        <select asp-for="BookGenre" asp-items="Model.Genres">
+            <option value="">All</option>
+        </select>
+        @* Search String Is Validated By hacing a maximum length of only 30, limiting characters a user can type in
+           Pattern was also used to ensure that "", <, >, //, \\ cannot be used
+        *@
+        Title: <input type="text" asp-for="SearchString" maxlength="30" pattern="[^\x22<>//\\]+" title="Please Use English Characters Only" placeholder="Title..." />
+        <input type="submit" value="Filter" />
+        <a asp-page="./Cart"><img src="./images/CartIcon.png" class="cartIcon" /></a>
+    </p>
+</form>
+
+
+<div class="container">
+    <div class="row">
+        @* Checks To See If There Are Any Books Present Or Searched *@
+        @if (Model.Books.Count == 0)
+        {
+            <p class="zerofiltered">Sorry! There are no books found. Try Searching Again.</p>
+        }
+    </div>
+    @for (var count = 1; count - 1 < Model.Books.Count; count++)  @*Have to start count at 1 because 0 % 4 == 0  *@
+    {
+        if (count % 4 == 0) @*For Every 4 books *@
+        {
+            <div class="row">
+                <div class="col-sm-3">
+                    @* Searches Database For Image path and Displays it *@
+                    @if (Model.Books[count - 4].Image != null)
+                    {
+                        var imagepath = "./" + Model.Books[count - 4].Image;
+                        <img src="@imagepath" alt="image"
+                             onerror="this.src='./images/NoImageAvailable.png'" />
+                             //In the event image path cannot be located, or is wrong another image will be used 
+                    }
+                    else
+                    {
+                        //If image path is blank, an image to show no image found is used
+                        <img src="./images/NoImageAvailable.png" />
+                    }
+                    <br />
+                    <table>
+                        <tr>
+                            <td>
+                                @* Displays First Item [count-4] = 0; first index of books list *@
+                                <div class="book-item">
+                                    <p class="book-Title">@Html.DisplayFor(modelItem => Model.Books[count - 4].Title)</p>
+                                    <div class="book-details">
+                                        <p class="book-Price">@Html.DisplayFor(modelItem => Model.Books[count - 4].Price)</p>
+                                        <button class="book-item-button" onclick="addtocart()" book-id="@Model.Books[count - 4].ID">Add To Cart!</button>
+                                        <br />
+                                        <a asp-page="./Details" asp-route-id="@Model.Books[count - 4].ID">Find Out More...</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-sm-3">
+                    @if (Model.Books[count - 3].Image != null)
+                    {
+                        var imagepath = "./" + Model.Books[count - 3].Image;
+                        <img src="@imagepath" alt="image"
+                             onerror="this.src='./images/NoImageAvailable.png'" />
+                    }
+                    else
+                    {
+                        <img src="./images/NoImageAvailable.png" />
+                    }
+                    <br />
+                    <table>
+                        <tr>
+                            <td>
+                                @* Displays Second Item [count-3] = 1; second index of books list *@
+                                <div class="book-item">
+                                    <p class="book-Title">@Html.DisplayFor(modelItem => Model.Books[count - 3].Title)</p>
+                                    <div class="book-details">
+                                        <p class="book-Price">@Html.DisplayFor(modelItem => Model.Books[count - 3].Price)</p>
+                                        <button class="book-item-button" onclick="addtocart()" book-id="@Model.Books[count - 3].ID">Add To Cart!</button>
+                                        <br />
+                                        <a asp-page="./Details" asp-route-id="@Model.Books[count - 3].ID">Find Out More...</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-sm-3">
+                    @if (Model.Books[count - 1].Image != null)
+                    {
+                        var imagepath = "./" + Model.Books[count - 2].Image;
+                        <img src="@imagepath" alt="image"
+                             onerror="this.src='./images/NoImageAvailable.png'" />
+                    }
+                    else
+                    {
+                        <img src="./images/NoImageAvailable.png" />
+                    }
+                    <br />
+                    <table>
+                        <tr>
+                            <td>
+                                @* Displays Third Item [count-2] = 2; Third index of books list *@
+                                <div class="book-item">
+                                    <p class="book-Title">@Html.DisplayFor(modelItem => Model.Books[count - 2].Title)</p>
+                                    <div class="book-details">
+                                        <p class="book-Price">@Html.DisplayFor(modelItem => Model.Books[count - 2].Price)</p>
+                                        <button class="book-item-button" onclick="addtocart()" book-id="@Model.Books[count - 2].ID">Add To Cart!</button>
+                                        <br />
+                                        <a asp-page="./Details" asp-route-id="@Model.Books[count - 2].ID">Find Out More...</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-sm-3">
+                    @if (Model.Books[count - 1].Image != null)
+                    {
+                        var imagepath = "./" + Model.Books[count - 1].Image;
+                        <img src="@imagepath" alt="image"
+                             onerror="this.src='./images/NoImageAvailable.png'" />
+                    }
+                    else
+                    {
+                        <img src="./images/NoImageAvailable.png" />
+                    }
+                    <table>
+                        <tr>
+                            <td>
+                                @* Displays Fourth Item [count-1] = 3; Fourth index of books list *@
+                                <div class="book-item">
+                                    <p class="book-Title">@Html.DisplayFor(modelItem => Model.Books[count - 1].Title)</p>
+                                    <div class="book-details">
+                                        <p class="book-Price">@Html.DisplayFor(modelItem => Model.Books[count - 1].Price)</p>
+                                        <button class="book-item-button" onclick="addtocart()" book-id="@Model.Books[count - 1].ID">Add To Cart!</button>
+                                        <br />
+                                        <a asp-page="./Details" asp-route-id="@Model.Books[count - 1].ID">Find Out More...</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        }
+        //When Count reaches max shows that the loop is on the last row of items
+        if (count == Model.Books.Count)
+        {
+            var remainder = Model.Books.Count % 4;
+            var coming = "Coming Soon!";
+            //If there is only one book in the Last row
+            if (remainder == 1)
+            {
+                <div class="row">
+                    <div class="col-sm-3">
+                        @if (Model.Books[count - remainder].Image != null)
+                        {
+                            var imagepath = "./" + Model.Books[count - remainder].Image;
+                            <img src="@imagepath" alt="image"
+                                 onerror="this.src='./images/NoImageAvailable.png'" />
+                        }
+                        else
+                        {
+                            <img src="./images/NoImageAvailable.png" />
+                        }
+                        <table>
+                            <tr>
+                                <td>
+                                    <div class="book-item">
+                                        <p class="book-Title">@Html.DisplayFor(modelItem => Model.Books[count - remainder].Title)</p>
+                                        <div class="book-details">
+                                            <p class="book-Price">@Html.DisplayFor(modelItem => Model.Books[count - remainder].Price)</p>
+                                            <button class="book-item-button" onclick="addtocart()" book-id="@Model.Books[count - remainder].ID">Add To Cart!</button>
+                                            <br />
+                                            <a asp-page="./Details" asp-route-id="@Model.Books[count - remainder].ID">Find Out More...</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    @* Next Three Items will be shown as Coming Soon  *@
+                    <div class="col-sm-3">
+                        <img src="./images/ComingSoon.jpg" alt="image" />
+                        <table>
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => coming)
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-sm-3">
+                        <img src="./images/ComingSoon.jpg" alt="image" />
+                        <table>
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => coming)
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-sm-3">
+                        <img src="./images/ComingSoon.jpg" alt="image" />
+                        <table>
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => coming)
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            }
+            //When There is 2 Books In The Last Row
+            if (remainder == 2)
+            {
+                <div class="row">
+                    <div class="col-sm-3">
+                        @if (Model.Books[count - remainder].Image != null)
+                        {
+                            var imagepath = "./" + Model.Books[count - remainder].Image;
+                            <img src="@imagepath" alt="image"
+                                 onerror="this.src='./images/NoImageAvailable.png'" />
+                        }
+                        else
+                        {
+                            <img src="./images/NoImageAvailable.png" />
+                        }
+                        <table>
+                            <tr>
+                                <td>
+                                    <div class="book-item">
+                                        <p class="book-Title">@Html.DisplayFor(modelItem => Model.Books[count - remainder].Title)</p>
+                                        <div class="book-details">
+                                            <p class="book-Price">@Html.DisplayFor(modelItem => Model.Books[count - remainder].Price)</p>
+                                            <button class="book-item-button" onclick="addtocart()" book-id="@Model.Books[count - remainder].ID">Add To Cart!</button>
+                                            <br />
+                                            <a asp-page="./Details" asp-route-id="@Model.Books[count - remainder].ID">Find Out More...</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-sm-3">
+                        @if (Model.Books[count - remainder + 1].Image != null)
+                        {
+                            var imagepath = "./" + Model.Books[count - remainder + 1].Image;
+                            <img src="@imagepath" alt="image"
+                                 onerror="this.src='./images/NoImageAvailable.png'" />
+                        }
+                        else
+                        {
+                            <img src="./images/NoImageAvailable.png" />
+                        }
+                        <table>
+                            <tr>
+                                <td>
+                                    <div class="book-item">
+                                        <p class="book-Title">@Html.DisplayFor(modelItem => Model.Books[count - remainder + 1].Title)</p>
+                                        <div class="book-details">
+                                            <p class="book-Price">@Html.DisplayFor(modelItem => Model.Books[count - remainder + 1].Price)</p>
+                                            <button class="book-item-button" onclick="addtocart()" book-id="@Model.Books[count - remainder + 1].ID">Add To Cart!</button>
+                                            <br />
+                                            <a asp-page="./Details" asp-route-id="@Model.Books[count - remainder + 1].ID">Find Out More...</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    @* Next Two Items will be shown as Coming Soon  *@
+                    <div class="col-sm-3">
+                        <img src="./images/ComingSoon.jpg" alt="image" />
+                        <table>
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => coming)
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-sm-3">
+                        <img src="./images/ComingSoon.jpg" alt="image" />
+                        <table>
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => coming)
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            }
+            //When There Is 3 Books In The Last Row
+            if (remainder == 3)
+            {
+                <div class="row">
+                    <div class="col-sm">
+                        @if (Model.Books[count - remainder].Image != null)
+                        {
+                            var imagepath = "./" + Model.Books[count - remainder].Image;
+                            <img src="@imagepath" alt="image"
+                                 onerror="this.src='./images/NoImageAvailable.png'" />
+                        }
+                        else
+                        {
+                            <img src="./images/NoImageAvailable.png" />
+                        }
+                        <table>
+                            <tr>
+                                <td>
+                                    <div class="book-item">
+                                        <p class="book-Title">@Html.DisplayFor(modelItem => Model.Books[count - remainder].Title)</p>
+                                        <div class="book-details">
+                                            <p class="book-Price">@Html.DisplayFor(modelItem => Model.Books[count - remainder].Price)</p>
+                                            <button class="book-item-button" onclick="addtocart()" book-id="@Model.Books[count - remainder].ID">Add To Cart!</button>
+                                            <br />
+                                            <a asp-page="./Details" asp-route-id="@Model.Books[count - remainder].ID">Find Out More...</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-sm-3">
+                        @if (Model.Books[count - remainder + 1].Image != null)
+                        {
+                            var imagepath = "./" + Model.Books[count - remainder + 1].Image;
+                            <img src="@imagepath" alt="image"
+                                 onerror="this.src='./images/NoImageAvailable.png'" />
+                        }
+                        else
+                        {
+                            <img src="./images/NoImageAvailable.png" />
+                        }
+                        <table>
+                            <tr>
+                                <td>
+                                    <div class="book-item">
+                                        <p class="book-Title">@Html.DisplayFor(modelItem => Model.Books[count - remainder + 1].Title)</p>
+                                        <div class="book-details">
+                                            <p class="book-Price">@Html.DisplayFor(modelItem => Model.Books[count - remainder + 1].Price)</p>
+                                            <button class="book-item-button" onclick="addtocart()" book-id="@Model.Books[count - remainder + 1].ID">Add To Cart!</button>
+                                            <br />
+                                            <a asp-page="./Details" asp-route-id="@Model.Books[count - remainder + 1].ID">Find Out More...</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-sm-3">
+                        @if (Model.Books[count - remainder + 2].Image != null)
+                        {
+                            var imagepath = "./" + Model.Books[count - remainder + 2].Image;
+                            <img src="@imagepath" alt="image"
+                                 onerror="this.src='./images/NoImageAvailable.png'" />
+                        }
+                        else
+                        {
+                            <img src="./images/NoImageAvailable.png" />
+                        }
+                        <table>
+                            <tr>
+                                <td>
+                                    <div class="book-item">
+                                        <p class="book-Title">@Html.DisplayFor(modelItem => Model.Books[count - remainder + 2].Title)</p>
+                                        <div class="book-details">
+                                            <p class="book-Price">@Html.DisplayFor(modelItem => Model.Books[count - remainder + 2].Price)</p>
+                                            <button class="book-item-button" onclick="addtocart()" book-id="@Model.Books[count - remainder + 2].ID">Add To Cart!</button>
+                                            <br />
+                                            <a asp-page="./Details" asp-route-id="@Model.Books[count - remainder + 2].ID">Find Out More...</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    @* Next one Item will be shown as Coming Soon  *@
+                    <div class="col-sm-3">
+                        <img src="./images/ComingSoon.jpg" alt="image" />
+                        <table>
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => coming)
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            }
+        }
+
+    }
+</div>
+
+<style>
+    img {
+        width: 15em;
+        height: 20em;
+        padding-bottom: 10px;
+        padding-top: 10px;
+    }
+    .cartIcon {
+        width: 3em;
+        height: 4em;
+    }
+
+    td {
+        width: 15em;
+        height: 20em;
+        text-align: center;
+        border-top: 7px solid cyan;
+        padding: 10px;
+        border-bottom: 7px solid cyan;
+    }
+
+        td:hover {
+            background-color: lightblue;
+        }
+
+    .zerofiltered {
+        font-size: 48px;
+        font-weight: 700;
+    }
+
+    .book-Price {
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+    .book-Title {
+        font-size: 20px;
+    }
+</style>
+
+<script>
+    const cartList = []
+    function addtocart() {
+        var addtocartbutton = document.getElementsByClassName("book-item-button")
+        for (var i = 0; i < addtocartbutton.length; i++) {
+            var button = addtocartbutton[i]
+        }
+        button.addEventListener('Submit', addtocartclicked(event))
+    }
+
+    function addtocartclicked(event) {
+        var button = event.target
+        var bookID = button.getAttribute('book-id');
+        var shopItem = button.parentElement.parentElement
+        var bookTitle = shopItem.getElementsByClassName('book-Title')[0].innerText
+        var ItemDetails = button.parentElement
+        var bookPrice = parseFloat(ItemDetails.getElementsByClassName('book-Price')[0].innerText.replace(/[$]/g, ''));
+        var bookImgSrc = button.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.querySelector('img').src;
+
+        var book = new Object();
+        book.ID = bookID;
+        book.title = bookTitle;
+        book.price = bookPrice;
+        book.imgSrc = bookImgSrc;
+
+        if (cartList.filter(item => item.ID == bookID).length <= 0) {
+            cartList.push(book);
+            console.log(cartList);
+            sessionStorage.setItem("cartItems", JSON.stringify(cartList))
+            alert("You added " + bookTitle + " for the price of $" + bookPrice +". Click on the cart icon to check your cart !")
+        }
+        else {
+            alert(`You have already added ${bookTitle} to your cart`);
+        }
+
+    }
+</script>
+
+
+
