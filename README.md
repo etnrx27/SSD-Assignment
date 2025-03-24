@@ -11,7 +11,7 @@ e) Miscellaneous Pages (eg: Shopping Cart/Search/Rating/Feedback)
 
 # Materials
 1) Secure_Books_Web_Application.docs - Documentation of security measures (Authentication, Authroisation, Non-repudation etc) and features of the website
-2) SSD-Assignment-main - Folder for the code and resources used for the web application
+2) SSD-Team06-ASG - Folder for the code and resources used for the web application
    
 # Contributors
 1) Neo Rei Siang Edward 
