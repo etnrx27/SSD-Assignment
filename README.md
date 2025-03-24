@@ -10,7 +10,7 @@ e) Miscellaneous Pages (eg: Shopping Cart/Search/Rating/Feedback)
 * Seeded Database of books can be found under Models>BookSeedData.cs
 
 # Materials
-1) Secure_Books_Web_Application.docs - Documentation of security measures (Authentication, Authroisation, Non-repudation etc) and features of the website
+1) SSD_ASG_P03_Team06_Report.docs - Documentation of security measures (Authentication, Authroisation, Non-repudation etc) and features of the website
 2) SSD-Team06_ASG - Folder for the code and resources used for the web application
    
 # Contributors
